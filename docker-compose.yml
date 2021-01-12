@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  fronttlc: # The name of the service
+    container_name: fronttlc-container  # Container name
+    build: ./front # Location of our Dockerfile
+    # run npm install
+    # run npm run
+    ports: 
+        - '4200:4200' # Port mapping
+    command: > 
+        bash -c "npm install && ng serve --host 0.0.0.0 --port 4200"
