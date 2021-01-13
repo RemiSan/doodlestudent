@@ -17,12 +17,4 @@ services:
     restart: always
     ports:
       - "2525:25"
-  quarkus-back:
-    container_name: quarkus-back-container
-     mvn package -Pnative -Dquarkus.native.container-build=true
-    build: 
-      context: .
-      dockerfile: "./src/main/docker/Dockerfile.native"
-    ports:
-      - "8080:8080"
     
