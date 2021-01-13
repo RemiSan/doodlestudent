@@ -6,6 +6,10 @@ services:
       - "3306:3306"
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_ROOT_PASSWORD=tlc
+      - MYSQL_DATABASE=tlc
+      - MYSQL_USER=tlc
+      - MYSQL_PASSWORD=tlc
   etherpad:
     image: etherpad/etherpad:stable
     ports:
@@ -17,4 +21,12 @@ services:
     restart: always
     ports:
       - "2525:25"
-    
+  quarkus-back:
+    container_name: quarkus-back-container
+    build: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - mail
+      - etherpad
