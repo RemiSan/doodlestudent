@@ -1,26 +1,14 @@
-####
-# This Dockerfile is used in order to build a container that runs the Quarkus application in JVM mode
-#
-# Before building the container image run:
-#
-# mvn package
-#
-# Then, build the image with:
-#
-# docker build -f src/main/docker/Dockerfile.jvm -t quarkus/code-with-quarkus-jvm .
-#
-# Then run the container using:
-#
-# docker run -i --rm -p 8080:8080 quarkus/code-with-quarkus-jvm
-#
-# If you want to include the debug port into your docker image
-# you will have to expose the debug port (default 5005) like this :  EXPOSE 8080 5050
-# 
-# Then run the container using : 
-#
-# docker run -i --rm -p 8080:8080 -p 5005:5005 -e JAVA_ENABLE_DEBUG="true" quarkus/code-with-quarkus-jvm
-#
-###
+
+
+### STAGE 1: Build ###
+FROM maven:3.6.3-jdk-11-slim AS build
+RUN mkdir -p /workspace
+WORKDIR /workspace
+COPY pom.xml /workspace
+COPY src /workspace/src
+RUN mvn package -Dmaven.test.skip=true
+
+
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.1
 
 ARG JAVA_PACKAGE=java-11-openjdk-headless
@@ -45,8 +33,8 @@ RUN microdnf install curl ca-certificates ${JAVA_PACKAGE} \
 # Configure the JAVA_OPTIONS, you can add -XshowSettings:vm to also display the heap size.
 ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 
-COPY target/lib/* /deployments/lib/
-COPY target/*-runner.jar /deployments/app.jar
+COPY --from=build /workspace/target/lib/* /deployments/lib/
+COPY --from=build /workspace/target/*-runner.jar /deployments/app.jar
 
 EXPOSE 8080
 USER 1001

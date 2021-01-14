@@ -22,7 +22,6 @@ services:
     ports:
       - "2525:25"
   quarkus-back:
-    container_name: quarkus-back-container
     build: ./
     ports:
       - "8080:8080"
