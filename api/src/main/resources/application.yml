@@ -11,7 +11,7 @@ quarkus:
     username: tlc
     password: "tlc"
     jdbc:
-      url: jdbc:mysql://${DB_SERVER}:3306/tlc?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true&serverTimezone=Europe/Paris
+      url: jdbc:mysql://db:3306/tlc?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true&serverTimezone=Europe/Paris
       driver: com.mysql.cj.jdbc.Driver
   hibernate-orm:
     database:
@@ -19,7 +19,7 @@ quarkus:
   mailer:
     from: test@quarkus.io
 #    host: smtp.sendgrid.net
-    host: ${MAILER_SERVER}
+    host: mail
     port: 2525
 #    port: 465
 #    ssl: true
