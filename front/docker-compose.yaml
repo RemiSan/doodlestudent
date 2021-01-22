@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  fronttlc:
+    container_name: fronttlc-container
+    build: ./
+    ports: 
+      - "4200:4200"
+    command: > 
+      bash -c "npm install && npm start"
+    networks:
+      - api_shared-net
+
+networks:
+  api_shared-net:
+    external: true
