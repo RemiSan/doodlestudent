@@ -1,4 +1,4 @@
-# Lien du site déployé
+# Link to the website
 
 https://ouluteam.diverse-team.fr/
 
